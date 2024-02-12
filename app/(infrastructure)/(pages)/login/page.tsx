@@ -4,6 +4,7 @@ import PublicLayout from '@/app/(infrastructure)/_components/PublicLayout/Public
 import Paper from '@mui/material/Paper'
 import Grid from "@mui/material/Unstable_Grid2"
 import Box from "@mui/material/Box"
+import Link from '@mui/material/Link'
 import InputBasicValidation from '@/app/(infrastructure)/_components/InputBasicValidation/InputBasicValidation'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -11,7 +12,6 @@ import * as yup from 'yup'
 import Checkbox from '@mui/material/Checkbox'
 import { useRouter } from "next/navigation"
 import { PublicRoutes } from "@/app/(infrastructure)/_routes"
-import Link from '@mui/material/Link';
 
 const schema = yup.object().shape({
   email: yup.string().required(),
@@ -39,7 +39,7 @@ const Login = () => {
   return (
     <PublicLayout>
       <Paper sx={{ backgroundColor: 'primary.light', width: '40%', padding: '3rem 5rem' }}>
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid xs={12} md={12}>
             <Typography 
               variant="h1" 
@@ -52,30 +52,24 @@ const Login = () => {
           <Grid xs={12} md={12} sx={{ margin: '2rem 0'}}>
             <Typography variant="body1" color='primary.contrastText'>Welcome back!</Typography>
           </Grid>
-          <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
+          <Grid xs={12} md={12}>
             <InputBasicValidation
               label={'Email'}
               name='email'
               control={control}
               placeholder="Enter your email..."
-              // error={Boolean(errors.organizationName)}
-              // helperText={errors.organizationName?.message}
-              // defaultValue={'gell'}
               rules={{
                 required: true
               }}
             />
           </Grid>
-          <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
+          <Grid xs={12} md={12}>
             <InputBasicValidation
               label={'Password'}
               name='password'
               control={control}
               placeholder="Enter your password..."
               type="password"
-              // error={Boolean(errors.organizationName)}
-              // helperText={errors.organizationName?.message}
-              // defaultValue={'gell'}
               rules={{
                 required: true
               }}
