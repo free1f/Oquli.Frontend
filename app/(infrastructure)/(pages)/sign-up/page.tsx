@@ -32,7 +32,7 @@ const Signup = () => {
 
   return (
     <PublicLayout>
-      <Paper sx={{ backgroundColor: 'primary.light', width: '40%', padding: '3rem 5rem' }}>
+      <Paper sx={{ backgroundColor: 'primary.light', width: '45%', padding: '3rem 5rem' }}>
       <Grid container spacing={2}>
           <Grid xs={12} md={12}>
             <Typography 
@@ -97,6 +97,7 @@ const Signup = () => {
             <InputBasicValidation
               label={'Password'}
               name='password'
+              type="password"
               control={control}
               placeholder="Enter your password..."
               rules={{ required: true }}
@@ -106,6 +107,7 @@ const Signup = () => {
             <InputBasicValidation
               label={'Confirm Password'}
               name='confirmPassword'
+              type="password"
               control={control}
               placeholder="Confirm your password..."
               rules={{ required: true }}

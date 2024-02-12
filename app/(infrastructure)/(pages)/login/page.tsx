@@ -38,7 +38,7 @@ const Login = () => {
 
   return (
     <PublicLayout>
-      <Paper sx={{ backgroundColor: 'primary.light', width: '40%', padding: '3rem 5rem' }}>
+      <Paper sx={{ backgroundColor: 'primary.light', width: '45%', padding: '3rem 5rem' }}>
         <Grid container spacing={2}>
           <Grid xs={12} md={12}>
             <Typography 
@@ -101,7 +101,7 @@ const Login = () => {
           <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
               <Button variant="contained">Log in</Button>
           </Grid>
-          <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
+          <Grid xs={12} md={12}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <Typography 
                 variant="body1" 
