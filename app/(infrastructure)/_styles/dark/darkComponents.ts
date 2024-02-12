@@ -105,24 +105,27 @@ export const darkComponents = {
       contained: {
         backgroundColor: darkPalette.secondary.main,
         textTransform: 'capitalize' as const,
-        fontSize: 14,
+        fontSize: 16,
+        fontWeight: 600,
         width: '100%',
         padding: '0.55rem',
         '&:hover': {
           backgroundColor: darkPalette.primary.gray
         }
       },
-      // outlinedPrimary: {
-      //   color: darkPalette.secondary?.contrastText,
-      //   border: `solid 0.75px ${darkPalette.secondary?.contrastText}`,
-      //   fontWeight: 800,
-      //   transition: '0.3s',
-      //   textTransform: 'inherit' as const,
-      //   '&:hover': {
-      //     border: `solid 0.75px ${darkPalette.secondary?.contrastText}`
-      //     // transform: 'scale(1.06)'
-      //   }
-      // },
+      outlinedPrimary: {
+        color: darkPalette.secondary?.contrastText,
+        border: `solid 0.75px ${darkPalette.secondary?.contrastText}`,
+        transition: '0.3s',
+        fontSize: 16,
+        fontWeight: 600,
+        textTransform: 'inherit' as const,
+        width: '100%',
+        '&:hover': {
+          border: `solid 0.75px ${darkPalette.secondary?.contrastText}`
+          // transform: 'scale(1.06)'
+        }
+      },
       // outlinedSecondary: {
       //   color: darkPalette.primary?.main,
       //   border: `solid 0.75px ${darkPalette.primary?.main}`,
