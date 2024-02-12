@@ -4,12 +4,11 @@ import PublicLayout from '@/app/(infrastructure)/_components/PublicLayout/Public
 import Paper from '@mui/material/Paper'
 import Grid from "@mui/material/Unstable_Grid2"
 import Box from "@mui/material/Box"
-import Link from '@mui/material/Link'
 import InputBasicValidation from '@/app/(infrastructure)/_components/InputBasicValidation/InputBasicValidation'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import Checkbox from '@mui/material/Checkbox'
+import Link from 'next/link'
 import { useRouter } from "next/navigation"
 import { PublicRoutes } from "@/app/(infrastructure)/_routes"
 
@@ -77,14 +76,14 @@ const ForgotPassword = () => {
                 Remember your password?
               </Typography>
               &nbsp;
-              <Link 
-                variant="body1" 
-                color='secondary.contrastText'
+              <Link
                 href={PublicRoutes.LOGIN}
-                underline="none"
+                style={{ textDecoration: 'none' }}
               >
+                <Typography variant="body1" color='secondary.contrastText'>
                   Log in
-                </Link>
+                </Typography>
+              </Link>
             </Box>
           </Grid>
         </Grid>

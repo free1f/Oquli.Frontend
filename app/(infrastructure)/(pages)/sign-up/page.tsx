@@ -1,17 +1,15 @@
 "use client";
-import useCount from "@/app/(infrastructure)/_redux/features/count/useCount"
 import { Button, Typography } from "@mui/material"
 import PublicLayout from '@/app/(infrastructure)/_components/PublicLayout/PublicLayout'
 import Paper from '@mui/material/Paper'
 import Grid from "@mui/material/Unstable_Grid2"
 import Box from "@mui/material/Box"
-import Link from '@mui/material/Link'
+import Link from 'next/link'
 import InputBasicValidation from '@/app/(infrastructure)/_components/InputBasicValidation/InputBasicValidation'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Checkbox from '@mui/material/Checkbox'
-import { useRouter } from "next/navigation"
 import { PublicRoutes } from "@/app/(infrastructure)/_routes"
 
 const schema = yup.object().shape({
@@ -136,12 +134,13 @@ const Signup = () => {
               </Typography>
               &nbsp;
               <Link 
-                variant="body1" 
-                color='secondary.contrastText'
                 href='#'
-                underline="none"
+                target="_blank"
+                style={{ textDecoration: 'none' }}
               >
-                Terms & Services
+                <Typography variant="body1" color='secondary.contrastText'>
+                  Terms & Services
+                </Typography>
               </Link>
             </Box>
           </Grid>
@@ -158,12 +157,12 @@ const Signup = () => {
               </Typography>
               &nbsp;
               <Link 
-                variant="body1" 
-                color='secondary.contrastText'
                 href={PublicRoutes.LOGIN}
-                underline="none"
+                style={{ textDecoration: 'none' }}
               >
-                Log in
+                <Typography variant="body1" color='secondary.contrastText'>
+                  Log in
+                </Typography>
               </Link>
             </Box>
           </Grid>
