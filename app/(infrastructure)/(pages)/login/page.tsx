@@ -9,6 +9,9 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Checkbox from '@mui/material/Checkbox'
+import { useRouter } from "next/navigation"
+import { PublicRoutes } from "@/app/(infrastructure)/_routes"
+import Link from '@mui/material/Link';
 
 const schema = yup.object().shape({
   email: yup.string().required(),
@@ -30,6 +33,8 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(schema)
   })
+
+  const router = useRouter()
 
   return (
     <PublicLayout>
@@ -111,20 +116,26 @@ const Login = () => {
                 Don&apos;t have an account?
               </Typography>
               &nbsp;
-              <Typography 
+              <Link 
                 variant="body1" 
-                color='secondary.contrastText'>
+                color='secondary.contrastText'
+                href={PublicRoutes.SIGNUP}
+                underline="none"
+              >
                   Sign up
-                </Typography>
+                </Link>
             </Box>
           </Grid>
           <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-              <Typography 
+              <Link 
                 variant="body1" 
-                color='secondary.contrastText'>
+                color='secondary.contrastText'
+                href={PublicRoutes.FORGOT_PASSWORD}
+                underline="none"
+              >
                   Forgot password?
-                </Typography>
+              </Link>
             </Box>
           </Grid>
         </Grid>
