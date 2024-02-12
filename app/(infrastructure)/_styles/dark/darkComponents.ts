@@ -1,7 +1,11 @@
 'use client'
 import { darkPalette } from './darkPalette'
 import { createBreakpoints } from '@mui/system'
+import { Theme } from '@mui/material/styles'
+import { alpha } from '@mui/system';
+
 const breakpoints = createBreakpoints({})
+
 export const darkComponents = {
   // Name of the component
   MuiContainer: {
@@ -96,63 +100,119 @@ export const darkComponents = {
   MuiButton: {
     styleOverrides: {
       root: {
-        borderRadius: 30
+        borderRadius: 5,
       },
-      contained: {},
+      contained: {
+        backgroundColor: darkPalette.secondary.main,
+        textTransform: 'capitalize' as const,
+        fontSize: 16,
+        fontWeight: 600,
+        width: '100%',
+        padding: '0.55rem',
+        '&:hover': {
+          backgroundColor: darkPalette.primary.gray
+        }
+      },
       outlinedPrimary: {
         color: darkPalette.secondary?.contrastText,
         border: `solid 0.75px ${darkPalette.secondary?.contrastText}`,
-        fontWeight: 800,
         transition: '0.3s',
+        fontSize: 16,
+        fontWeight: 600,
         textTransform: 'inherit' as const,
+        width: '100%',
         '&:hover': {
           border: `solid 0.75px ${darkPalette.secondary?.contrastText}`
           // transform: 'scale(1.06)'
         }
       },
-      outlinedSecondary: {
-        color: darkPalette.primary?.main,
-        border: `solid 0.75px ${darkPalette.primary?.main}`,
-        fontWeight: 800,
-        transition: '0.3s',
-        textTransform: 'inherit' as const,
-        '&:hover': {
-          border: `solid 0.75px ${darkPalette.primary?.main}`
-          // transform: 'scale(1.06)'
-        }
-      },
-      outlinedSizeLarge: {
-        fontSize: 30,
-        padding: '14px 27px',
-        borderRadius: 50
-      },
-      textPrimary: {
-        textTransform: 'inherit' as const,
-        color: darkPalette.secondary?.contrastText,
-        fontSize: '1.125rem',
-        padding: '0 6px !important',
-        transition: '0.3s',
+      // outlinedSecondary: {
+      //   color: darkPalette.primary?.main,
+      //   border: `solid 0.75px ${darkPalette.primary?.main}`,
+      //   fontWeight: 800,
+      //   transition: '0.3s',
+      //   textTransform: 'inherit' as const,
+      //   '&:hover': {
+      //     border: `solid 0.75px ${darkPalette.primary?.main}`
+      //     // transform: 'scale(1.06)'
+      //   }
+      // },
+      // outlinedSizeLarge: {
+      //   fontSize: 30,
+      //   padding: '14px 27px',
+      //   borderRadius: 50
+      // },
+      // textPrimary: {
+      //   textTransform: 'inherit' as const,
+      //   color: darkPalette.secondary?.contrastText,
+      //   fontSize: '1.125rem',
+      //   padding: '0 6px !important',
+      //   transition: '0.3s',
 
-        '&:hover': {
-          // transform: 'scale(1.06)'
-        }
-      },
-      textSecondary: {
-        textTransform: 'inherit' as const,
-        color: darkPalette.primary?.main,
-        fontSize: '1.125rem',
-        padding: '0 6px !important',
-        transition: '0.3s',
+      //   '&:hover': {
+      //     // transform: 'scale(1.06)'
+      //   }
+      // },
+      // textSecondary: {
+      //   textTransform: 'inherit' as const,
+      //   color: darkPalette.primary?.main,
+      //   fontSize: '1.125rem',
+      //   padding: '0 6px !important',
+      //   transition: '0.3s',
 
-        '&:hover': {
-          // transform: 'scale(1.06)'
-        }
-      }
+      //   '&:hover': {
+      //     // transform: 'scale(1.06)'
+      //   }
+      // }
     }
   },
   MuiTextField: {
     styleOverrides: {
-      root: {}
+      root: {
+        width: '100%',
+      }
+    }
+  },
+  MuiFilledInput: {
+    styleOverrides: {
+      root: {
+        width: '100%',
+        borderRadius: 4,
+        position: 'relative',
+        backgroundColor: darkPalette.primary.gray,
+        border: '1px solid',
+        borderColor: darkPalette.primary.gray,
+        fontSize: 16,
+        'label': {
+          color: 'black',
+        },
+        'label + &': {
+          marginTop: '2rem',
+        },
+        '&:hover': {
+          backgroundColor: darkPalette.primary.gray
+        },
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: `0 0 0 1000px ${darkPalette.primary.gray} inset`,
+          WebkitTextFillColor: darkPalette.primary.main
+        },
+        input: {
+          padding: '0.55rem',
+          color: darkPalette.primary.main,
+        }
+      }
+    }
+  },
+  MuiInputLabel: {
+    styleOverrides: {
+      root: {
+        color: darkPalette.primary.main,
+        fontSize: 16,
+        transform: 'unset',
+        '&.Mui-focused': {
+          color: darkPalette.primary.main,
+        }
+      }
     }
   },
   MuiCssBaseline: {
