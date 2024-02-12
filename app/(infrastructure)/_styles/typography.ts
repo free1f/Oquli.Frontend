@@ -6,10 +6,10 @@ export const typography = {
       "MontserratLight",
     ].join(","),
   
-    h1: { fontFamily: '"NeuzeitGroBla", sans-serif', fontSize: 45 },
-    h2: { fontFamily: '"NeuzeitGroBold", sans-serif', fontSize: 40 },
-    h3: { fontFamily: '"NeuzeitGroBla", sans-serif', fontSize: 36 },
-    h4: { fontFamily: '"NeuzeitGroBold", sans-serif', fontSize: 30 },
+    h1: { fontFamily: '"NeuzeitGroBla", sans-serif', fontSize: 40 },
+    h2: { fontFamily: '"NeuzeitGroBold", sans-serif', fontSize: 35 },
+    h3: { fontFamily: '"NeuzeitGroBla", sans-serif', fontSize: 31 },
+    h4: { fontFamily: '"NeuzeitGroBold", sans-serif', fontSize: 28 },
     h5: { fontFamily: '"NeuzeitGroLig", sans-serif', fontSize: 22 },
     h6: {
       fontFamily: '"NeuzeitGroBold", sans-serif',
@@ -26,13 +26,13 @@ export const typography = {
     },
     body1: {
       fontFamily: '"NeuzeitGroLig", sans-serif',
-      fontSize: 18,
+      fontSize: 16,
     },
     body2: {
       fontFamily: '"NeuzeitGroBold", sans-serif',
       fontSize: 14,
     },
-    button: { fontFamily: '"NeuzeitGroBold", sans-serif', fontSize: 18 },
+    button: { fontFamily: '"NeuzeitGroBold", sans-serif', fontSize: 16 },
     caption: { fontFamily: '"NeuzeitGroLig", sans-serif', fontSize: 14 },
     overline: { fontFamily: '"NeuzeitGroLig", sans-serif', fontSize: 14 },
   };

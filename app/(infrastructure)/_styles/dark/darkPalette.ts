@@ -1,15 +1,16 @@
 export const darkPalette = {
     primary: {
-      main: '#F4DD4F',
-      light: '#f6e36e',
+      main: '#292929',
+      light: '#FFFFFF',
       dark: '#f2d930',
-      contrastText: '#101A28'
+      gray: '#eaeaea',
+      contrastText: '#1E1E1E'
     },
     secondary: {
-      main: '#101A28',
+      main: '#E97024',
       dark: '#101A25',
       light: '#313a4a',
-      contrastText: '#fff'
+      contrastText: '#BBD2EE'
     },
     dark: '#545B64',
     contrastThreshold: 3,

@@ -1,5 +1,5 @@
 'use client'
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, Suspense } from "react";
 import { Provider as ReduxProvider } from "react-redux";
 import { store } from "@/app/(infrastructure)/_redux/app/store";
 
@@ -14,15 +14,17 @@ export default function App({ children }: { children: ReactNode }) {
     const { value } = useContext(ThemeContextMode);
 
     return (
-        <ReduxProvider store={store}>
-            <AppRouterCacheProvider>
-                <ThemeProviderMode>
-                    <ThemeProvider theme={value === "light" ? lightTheme : darkTheme}>
-                        <CssBaseline />
-                        {children}
-                    </ThemeProvider>
-                </ThemeProviderMode>
-            </AppRouterCacheProvider>
-        </ReduxProvider>
+        <Suspense fallback={<h1>Loading</h1>}>
+            <ReduxProvider store={store}>
+                <AppRouterCacheProvider>
+                    <ThemeProviderMode>
+                        <ThemeProvider theme={value === "light" ? lightTheme : darkTheme}>
+                            <CssBaseline />
+                            {children}
+                        </ThemeProvider>
+                    </ThemeProviderMode>
+                </AppRouterCacheProvider>
+            </ReduxProvider>
+        </Suspense>
     );
 }
