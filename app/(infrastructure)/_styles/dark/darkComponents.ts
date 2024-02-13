@@ -54,6 +54,9 @@ export const darkComponents = {
     styleOverrides: {
       root: {
         fill: darkPalette.secondary?.main,
+        '&.MuiSelect-icon': {
+          fill: darkPalette.secondary?.gray
+        }
       }
     }
   },
@@ -69,8 +72,31 @@ export const darkComponents = {
       root: {
         borderRadius: 10,
         backgroundImage: 'none',
-        backgroundColor: darkPalette.secondary.dark
-      }
+        backgroundColor: darkPalette.secondary.dark,
+        '&.MuiPopover-paper': {
+          '&.MuiMenu-paper': {
+            backgroundColor: darkPalette.primary.gray
+          }
+        }
+      },
+    }
+  },
+  MuiSelect: {
+    styleOverrides: {
+      root: {
+        border: 'unset',
+        '&:hover': {
+          borderColor: 'unset'
+        }
+      },
+      select: {
+        // padding: '0 0.5rem',
+        fontSize: 16,
+        lineHeight: '1rem',
+        width: '100%',
+        color: darkPalette.primary.contrastText,
+        backgroundColor: darkPalette.primary.gray,
+      },
     }
   },
   MuiOutlinedInput: {
@@ -101,6 +127,11 @@ export const darkComponents = {
     styleOverrides: {
       root: {
         borderRadius: 5,
+        '&.Mui-disabled': {
+          backgroundColor: darkPalette.primary.gray,
+          color: darkPalette.secondary.gray,
+          fontWeight: 700
+        }
       },
       contained: {
         backgroundColor: darkPalette.secondary.main,

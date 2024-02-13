@@ -21,7 +21,7 @@ export const typography = {
     h2: { fontFamily: league_spartan.style.fontFamily, fontSize: 35 },
     h3: { fontFamily: league_spartan.style.fontFamily, fontSize: 31 },
     h4: { fontFamily: league_spartan.style.fontFamily, fontSize: 28 },
-    h5: { fontFamily: league_spartan.style.fontFamily, fontSize: 22 },
+    h5: { fontFamily: league_spartan.style.fontFamily, fontWeight: 700, fontSize: 22 },
     h6: {
       fontFamily: league_spartan.style.fontFamily,
       fontSize: 18,

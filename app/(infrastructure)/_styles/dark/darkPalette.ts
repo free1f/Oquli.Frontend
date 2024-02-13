@@ -10,6 +10,7 @@ export const darkPalette = {
       main: '#E97024',
       dark: '#101A25',
       light: '#313a4a',
+      gray: '#6F6F6F',
       contrastText: '#BBD2EE'
     },
     dark: '#545B64',
