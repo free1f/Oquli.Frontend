@@ -5,21 +5,22 @@ import Background from "@/app/(infrastructure)/_assets/images/Background.png"
 import BackgroundImage from "@/app/(infrastructure)/_components/BackgroundImage/BackgroundImage"
 import Container from "@mui/material/Container"
 
-interface PublicLayoutProps {
+interface PrivateLayoutProps {
   children: ReactNode;
 }
 
-const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
+const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children }) => {
 
   return (
     <Box sx={{ position: 'relative' }}>
-        <BackgroundImage src={Background} alt="background" backgroundColor='rgba(250, 250, 250, 0.5)' />
+        <BackgroundImage src={Background} alt="background" backgroundColor='rgba(250, 250, 250)' />
         <Container 
           sx={{ 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center', 
-            padding : '5rem 0' 
+            padding : '3rem 0',
+            minHeight: '91.4vh'
           }}>
           {children}
         </Container>
@@ -27,4 +28,4 @@ const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
   );
 }
 
-export default PublicLayout
+export default PrivateLayout

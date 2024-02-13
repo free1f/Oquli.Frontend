@@ -53,7 +53,7 @@ export const darkComponents = {
   MuiSvgIcon: {
     styleOverrides: {
       root: {
-        // fill: 'transparent'
+        fill: darkPalette.secondary?.main,
       }
     }
   },
@@ -114,6 +114,19 @@ export const darkComponents = {
         }
       },
       outlinedPrimary: {
+        fill: darkPalette.secondary.main,
+        textTransform: 'inherit' as const,
+        border: 'none',
+        padding: '1rem',
+        fontSize: 16,
+        fontWeight: 700,
+        borderRadius: '10px',
+        boxShadow: '2px 2px 4px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 5px 101px 0px rgba(0,0,0,0.12)',
+        '&:hover': {
+          border: 'none',
+        }
+      },
+      text: {
         color: darkPalette.secondary?.contrastText,
         border: `solid 0.75px ${darkPalette.secondary?.contrastText}`,
         transition: '0.3s',
@@ -126,33 +139,6 @@ export const darkComponents = {
           // transform: 'scale(1.06)'
         }
       },
-      // outlinedSecondary: {
-      //   color: darkPalette.primary?.main,
-      //   border: `solid 0.75px ${darkPalette.primary?.main}`,
-      //   fontWeight: 800,
-      //   transition: '0.3s',
-      //   textTransform: 'inherit' as const,
-      //   '&:hover': {
-      //     border: `solid 0.75px ${darkPalette.primary?.main}`
-      //     // transform: 'scale(1.06)'
-      //   }
-      // },
-      // outlinedSizeLarge: {
-      //   fontSize: 30,
-      //   padding: '14px 27px',
-      //   borderRadius: 50
-      // },
-      // textPrimary: {
-      //   textTransform: 'inherit' as const,
-      //   color: darkPalette.secondary?.contrastText,
-      //   fontSize: '1.125rem',
-      //   padding: '0 6px !important',
-      //   transition: '0.3s',
-
-      //   '&:hover': {
-      //     // transform: 'scale(1.06)'
-      //   }
-      // },
       // textSecondary: {
       //   textTransform: 'inherit' as const,
       //   color: darkPalette.primary?.main,
