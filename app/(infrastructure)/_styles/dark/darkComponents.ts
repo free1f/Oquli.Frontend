@@ -109,8 +109,11 @@ export const darkComponents = {
   MuiTab: {
     styleOverrides: {
       root: {
-        color: darkPalette.secondary?.contrastText,
-        textTransform: 'capitalize' as const
+        color: darkPalette.secondary?.gray,
+        textTransform: 'capitalize' as const,
+        "&.Mui-selected": {
+          color: darkPalette.primary.contrastText,
+        }
       }
     }
   },

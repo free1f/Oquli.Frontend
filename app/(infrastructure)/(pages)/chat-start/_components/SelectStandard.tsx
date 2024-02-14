@@ -10,18 +10,24 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { SelectBasicValidation } from '@/app/(infrastructure)/_components/SelectBasicValidation'
+import SearchIcon from '@mui/icons-material/Search'
+import { styled, alpha } from '@mui/material/styles'
+import InputBase from '@mui/material/InputBase'
+import { SearchBar } from '@/app/(infrastructure)/_components/SearchBar'
+import { BoxList } from '@/app/(infrastructure)/_components/BoxList'
 
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '30%',
   bgcolor: 'primary.light',
   border: 'none',
   borderRadius: '10px',
   boxShadow: 24,
   p: 4,
+	minHeight: '42rem',
+	minWidth: '15rem'
 };
 
 interface ISelectStandard {
@@ -128,7 +134,12 @@ const SelectStandard = ({ open, handleOpen, handleClose }: ISelectStandard) => {
 			aria-describedby="modal-modal-description"
     >
 			<Box sx={style}>
-				<Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+				<Tabs 
+					value={value} 
+					onChange={handleChange} 
+					aria-label="basic tabs example"
+					TabIndicatorProps={{ style: { background: "#E97024" } }}
+				>
 					<Tab label="Preloaded Standards" {...a11yProps(0)} />
 					<Tab label="My standards" {...a11yProps(1)}/>
 				</Tabs>
@@ -194,56 +205,11 @@ const SelectStandard = ({ open, handleOpen, handleClose }: ISelectStandard) => {
 							onInputChange={() => setCity(true)}
 						/>
 					</Box>
-					<Box 
-						sx={{ 
-							height: '10rem', 
-							backgroundColor: 'primary.gray', 
-							p: '1rem', 
-							m: '1rem 0', 
-							borderRadius: '10px',
-						}}
-					>
-						{
-							country && state && city ? (
-								<Box 
-									sx={{ 
-										height: '100%', 
-										display: 'flex',
-										flexDirection: 'column',
-										overflow: 'auto'
-									}}
-								>
-									{
-										dummyList.map((item, index) => {
-											return (
-												<Typography 
-													variant='body1' 
-													color='primary.contrastText' 
-													key={index}
-													sx={{ ':hover': { cursor: 'pointer', backgroundColor: 'secondary.main', opacity: 0.5 } }}
-													onClick={() => setSelected(true)}
-												>
-													{item.label}
-												</Typography>
-											)
-										})
-									}
-								</Box> ) : (
-								<Box 
-								sx={{ 
-									height: 'inherit', 
-									display: 'flex', 
-									alignItems: 'center', 
-									justifyContent: 'center', 
-								}}
-							>
-								<Typography variant='body1' color='primary.contrastText'>
-									Once you select country/state/city, you will see the standards here.
-								</Typography>
-							</Box>
-							)
-						}
-					</Box>
+					<BoxList 
+							list={dummyList} 
+							isEmpty={country && state && city} 
+							emptyMessage={'Once you select country/state/city, you will see the standards here.'}
+						/>
 					<Button 
 						variant='contained' 
 						disabled={!selected}
@@ -252,7 +218,35 @@ const SelectStandard = ({ open, handleOpen, handleClose }: ISelectStandard) => {
 					</Button>
 				</CustomTabPanel>
 				<CustomTabPanel value={value} index={1}>
-					<Typography variant='body1' color='primary.contrastText'>ITEM 2</Typography>
+					<Typography variant='h5' color='primary.contrastText'>
+						SELECT A DESIGN STANDARD FROM YOUR UPLOADS.
+					</Typography>
+					<Typography variant='body1' color='primary.contrastText' sx={{ mb: '1rem' }}>
+						Select a design standard from your uploaded documents.
+					</Typography>
+					<SelectBasicValidation
+						label={'Search by country'}
+						name='searchByCountry'
+						control={control}
+						error={false}
+						defaultValue={'Default value'}
+						rules={{
+							required: true
+						}}
+						options={[
+							{
+								label: 'country 1',
+								value: 'country 1'
+							}
+						]}
+					/>
+						<SearchBar />
+						<BoxList 
+							list={[{ label: 'test', value :'test'}, { label: 'test2', value: 'test2' }]} 
+							isEmpty={false} 
+							emptyMessage={'No standards found'}
+						/>
+						<Button variant='contained'>Select Design Standard</Button>
 				</CustomTabPanel>
 			</Box>
     </Modal>
