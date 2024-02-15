@@ -12,6 +12,7 @@ import * as yup from 'yup'
 import Checkbox from '@mui/material/Checkbox'
 import { useRouter } from "next/navigation"
 import { PublicRoutes } from "@/app/(infrastructure)/_routes"
+import useAuth from "../../_redux/features/auth/useAuth"
 
 const schema = yup.object().shape({
   email: yup.string().required(),
@@ -33,8 +34,29 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(schema)
   })
+  
+  const { _setUser, _handleLogin } = useAuth()
 
   const router = useRouter()
+
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await fetch('https://ctc81musm2.execute-api.us-east-1.amazonaws.com/dev/auth', {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer bmljb2ZlaWpvbzpFVmVyc2VBZG0xbi4='
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     // Assuming the token is returned in the response
+  //     // Store the token in state or localStorage
+  //     console.log('Token:', data);
+  //     router.push('/chat-start'); // Redirect to dashboard after successful login
+  //   } catch (error) {
+  //     console.error('Login failed', error);
+  //   }
+  // }
 
   return (
     <PublicLayout>
@@ -99,7 +121,11 @@ const Login = () => {
             </Box>
           </Grid>
           <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
-              <Button variant="contained">Log in</Button>
+              <Button variant="contained" onClick={handleSubmit((d) => {
+                _setUser(d.email, d.password)
+                _handleLogin()
+                router.push('/chat-start')
+              })}>Log in</Button>
           </Grid>
           <Grid xs={12} md={12}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
