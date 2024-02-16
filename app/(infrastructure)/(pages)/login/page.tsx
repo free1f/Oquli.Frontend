@@ -1,4 +1,5 @@
 "use client"
+import { useState } from 'react'
 import { Button, Typography } from "@mui/material"
 import PublicLayout from '@/app/(infrastructure)/_components/PublicLayout/PublicLayout'
 import Paper from '@mui/material/Paper'
@@ -6,7 +7,7 @@ import Grid from "@mui/material/Unstable_Grid2"
 import Box from "@mui/material/Box"
 import Link from '@mui/material/Link'
 import InputBasicValidation from '@/app/(infrastructure)/_components/InputBasicValidation/InputBasicValidation'
-import { type SubmitHandler, useForm } from 'react-hook-form'
+import { type SubmitHandler, useForm, set } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Checkbox from '@mui/material/Checkbox'
@@ -34,29 +35,29 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(schema)
   })
-  
-  const { _setUser, _handleLogin } = useAuth()
 
   const router = useRouter()
+  const axios = require('axios')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  // const handleLogin = async () => {
-  //   try {
-  //     const response = await fetch('https://ctc81musm2.execute-api.us-east-1.amazonaws.com/dev/auth', {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer bmljb2ZlaWpvbzpFVmVyc2VBZG0xbi4='
-  //       },
-  //     });
-  //     const data = await response.json();
-  //     // Assuming the token is returned in the response
-  //     // Store the token in state or localStorage
-  //     console.log('Token:', data);
-  //     router.push('/chat-start'); // Redirect to dashboard after successful login
-  //   } catch (error) {
-  //     console.error('Login failed', error);
-  //   }
-  // }
+  const handleLogin = async (data: any) => {
+    const baseURL = process.env.NEXT_PUBLIC_API_URL
+    const token = btoa(`${data.email}:${data.password}`)
+    const instance = axios.create({
+      baseURL,
+      timeout: 1000,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    instance.get('/auth').then((response: any) => {
+      router.push('/chat-start')
+    }).catch((error: any) => {
+      setErrorMessage('An error occurred. Please try again later or contact with support.')
+      console.log('error', error)
+    })
+  }
 
   return (
     <PublicLayout>
@@ -97,7 +98,15 @@ const Login = () => {
               }}
             />
           </Grid>
-          <Grid xs={12} md={12} sx={{ m: '2rem 0'}}>
+          <Grid xs={12} md={12} sx={{ m: '0 0'}}>
+          {
+            errorMessage.length &&
+            <Typography variant="body1" color='secondary.main'>
+              {errorMessage}
+            </Typography>
+          }
+          </Grid>
+          {/* <Grid xs={12} md={12} sx={{ m: '2rem 0'}}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
               <Checkbox 
                 inputProps={{
@@ -119,13 +128,14 @@ const Login = () => {
                 Keep me logged in
               </Typography>
             </Box>
-          </Grid>
+          </Grid> */}
           <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
-              <Button variant="contained" onClick={handleSubmit((d) => {
-                _setUser(d.email, d.password)
-                _handleLogin()
-                router.push('/chat-start')
-              })}>Log in</Button>
+            <Button 
+              variant="contained" 
+              onClick={handleSubmit((d) => handleLogin(d))}
+            >
+              Log in
+            </Button>
           </Grid>
           <Grid xs={12} md={12}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
