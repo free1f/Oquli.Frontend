@@ -39,6 +39,7 @@ const Login = () => {
   const router = useRouter()
   const axios = require('axios')
   const [errorMessage, setErrorMessage] = useState('')
+  const { _setUser } = useAuth()
 
   const handleLogin = async (data: any) => {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
@@ -52,6 +53,7 @@ const Login = () => {
       }
     })
     instance.get('/auth').then((response: any) => {
+      _setUser(data.email, data.password)
       router.push('/chat-start')
     }).catch((error: any) => {
       setErrorMessage('An error occurred. Please try again later or contact with support.')

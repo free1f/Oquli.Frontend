@@ -5,11 +5,11 @@ import { setUser } from "./authSlice"
 import { type IUser } from "@/app/(domain)/_models/user.model"
 
 interface IUseAuth {
-	token: IUser
-	isFetchingToken: boolean
-	loginError: any,
+	// token: IUser
+	// isFetchingToken: boolean
+	// loginError: any,
+	// _handleLogin: () => void
 	_setUser: (email: string, password: string) => void
-	_handleLogin: () => void
 }
 
 const useAuth = (): IUseAuth => {
@@ -19,30 +19,34 @@ const useAuth = (): IUseAuth => {
 	const [shouldFetch, setShouldFetch] = useState(false)
 	
 	// TODO: Replace with refetch
-	const {
-		data: token = { token: '' } as IUser,
-		isFetching: isFetchingToken,
-		error: loginError,
-		refetch,
-	} = useGetTokenQuery({email, password}, {
-		pollingInterval: 3600000
-	})
+// 	const {
+// 		data: token = { token: '' } as IUser,
+// 		isFetching: isFetchingToken,
+// 		error: loginError,
+// 		refetch,
+// 	} = useGetTokenQuery({email, password}, {
+// 		pollingInterval: 3600000
+// 	})
 
-	const _handleLogin = () => {
-		refetch()
-  }
+// 	const _handleLogin = () => {
+// 		refetch()
+//   }
 	
-	const _setUser = useCallback(
-		(username: string, password: string) => dispatch(setUser({ email, password })),
-		[dispatch],
-	);
+	// const _setUser = useCallback(
+	// 	(username: string, password: string) => dispatch(setUser({ email, password })),
+	// 	[dispatch, email],
+	// );
+
+	const _setUser = (email: string, password: string) => {
+		dispatch(setUser({ email, password }))
+	}
 
 	return {
-		token,
-		isFetchingToken,
-		loginError,
+		// token,
+		// isFetchingToken,
+		// loginError,
 		_setUser,
-		_handleLogin
+		// _handleLogin
 	}
 }
 

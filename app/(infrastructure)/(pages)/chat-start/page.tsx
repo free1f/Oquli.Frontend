@@ -10,19 +10,22 @@ import Box from "@mui/material/Box"
 import { useRouter } from 'next/navigation'
 import SelectStandard from './_components/SelectStandard'
 import { PrivateRoutes } from '@/app/(infrastructure)/_routes'
+import { useAppSelector, useAppDispatch } from "../../_redux/app/hooks"
 
 const ChatStart = () => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+	const { email, password } = useAppSelector((state) => state.auth)
+
 	return (
 		<PrivateLayout>
 			<Paper sx={{ backgroundColor: 'primary.light', width: '95%', padding: '10rem' }}>
 				<Grid container spacing={1}>
 					<Grid xs={12} md={12}>
 						<Box sx={{ display: 'flex', justifyContent: 'center'}}>
-							<Typography variant="h1" color='primary.contrastText'>HI, USER1!</Typography>
+							<Typography variant="h1" color='primary.contrastText'>HI, {email}</Typography>
 						</Box>
 					</Grid>
 					<Grid xs={12} md={12}>
