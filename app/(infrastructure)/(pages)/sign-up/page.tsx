@@ -36,6 +36,7 @@ const Signup = () => {
   const axios = require('axios')
   const { _setUser } = useAuth()
   const [loader, setLoader] = useState(false)
+  const [disableButton, setDisableButton] = useState(true)
 
   const handleRegister = async (data: any) => {
     const baseURL = process.env.NEXT_PUBLIC_API_URL
@@ -191,6 +192,7 @@ const Signup = () => {
                         color: 'secondary.contrastText',
                       },
                     }}
+                    onChange={(e) => setDisableButton(!disableButton)}
                   />
                   <Typography 
                     variant="body1" 
@@ -210,7 +212,13 @@ const Signup = () => {
                 </Box>
               </Grid>
               <Grid xs={12} md={12}>
-                <Button variant="contained" onClick={handleSubmit(d => handleRegister(d))}>Sign up</Button>
+                <Button 
+                  variant="contained" 
+                  onClick={handleSubmit(d => handleRegister(d))}
+                  disabled={disableButton}
+                >
+                  Sign up
+                </Button>
               </Grid>
               <Grid xs={12} md={12}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
