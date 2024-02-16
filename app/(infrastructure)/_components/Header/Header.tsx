@@ -12,6 +12,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import OquliLogo from '@/app/(infrastructure)/_assets/images/OquliLogo.png'
 import Image from "next/image"
+import { useAppSelector } from "../../_redux/app/hooks"
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
@@ -27,17 +28,22 @@ function ResponsiveAppBar() {
     setAnchorElUser(null)
   }
 
+  const { email } = useAppSelector((state) => state.auth)
+
   return (
     <AppBar position="static" sx={{ backgroundColor: 'primary.main'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between'}}>
           <Image src={OquliLogo} alt="logo" />
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {
+              email.length > 0 &&
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+            }
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
