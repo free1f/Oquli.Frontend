@@ -36,8 +36,6 @@ const Login = () => {
     resolver: yupResolver(schema)
   })
 
-  console.log(errors.email)
-
   const router = useRouter()
   const axios = require('axios')
   const [errorMessage, setErrorMessage] = useState('')

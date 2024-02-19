@@ -90,9 +90,8 @@ export const darkComponents = {
         }
       },
       select: {
-        // padding: '0 0.5rem',
+        marginTop: '0.55rem',
         fontSize: 16,
-        lineHeight: '1rem',
         width: '100%',
         color: darkPalette.primary.contrastText,
         backgroundColor: darkPalette.primary.gray,
@@ -103,6 +102,9 @@ export const darkComponents = {
     styleOverrides: {
       root: {
         borderRadius: '0.9rem'
+      },
+      notchedOutline: {
+        border: 'none'
       }
     }
   },

@@ -15,10 +15,16 @@ import { useRouter } from "next/navigation"
 import { PublicRoutes } from "@/app/(infrastructure)/_routes"
 import useAuth from "../../_redux/features/auth/useAuth"
 import CircularProgress from '@mui/material/CircularProgress'
+import { SelectBasicValidation } from '../../_components/SelectBasicValidation';
 
 const schema = yup.object().shape({
-  email: yup.string().required(),
-  password: yup.string().required()
+  name: yup.string().required(),
+  lastName: yup.string().required(),
+  company: yup.string().required(),
+  useType: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+  confirmPassword: yup.string().required()
 }).required()
 
 const Signup = () => {
@@ -141,11 +147,15 @@ const Signup = () => {
                 />
               </Grid>
               <Grid xs={12} md={6}>
-                <InputBasicValidation
+                <SelectBasicValidation
                   label={'User Type'}
                   name='userType'
                   control={control}
                   placeholder="Select type"
+                  options={[
+                    { label: 'Developer', value: 'developer' }
+                  ]}
+                  defaultValue="developer"
                   rules={{ required: true }}
                 />
               </Grid>
