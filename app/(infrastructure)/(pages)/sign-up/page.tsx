@@ -23,8 +23,13 @@ const schema = yup.object().shape({
   company: yup.string().required(),
   useType: yup.string().required(),
   email: yup.string().email().required(),
-  password: yup.string().required(),
-  confirmPassword: yup.string().required()
+  password: yup.string()
+  .required('Password is required')
+  .matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+  ),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), undefined], 'Passwords must match').required()
 }).required()
 
 const Signup = () => {
@@ -124,6 +129,8 @@ const Signup = () => {
                   label={'First Name'}
                   name='name'
                   control={control}
+                  error={!!errors.name}
+                  helperText={errors.name ? errors.name.message : ''}
                   placeholder="Enter your first name..."
                   rules={{ required: true }}
                 />
@@ -133,6 +140,8 @@ const Signup = () => {
                   label={'Last Name'}
                   name='lastName'
                   control={control}
+                  error={!!errors.lastName}
+                  helperText={errors.lastName ? errors.lastName.message : ''}
                   placeholder="Enter your last name..."
                   rules={{ required: true }}
                 />
@@ -142,6 +151,8 @@ const Signup = () => {
                   label={'Company'}
                   name='company'
                   control={control}
+                  error={!!errors.company}
+                  helperText={errors.company ? errors.company.message : ''}
                   placeholder="Enter company name..."
                   rules={{ required: true }}
                 />
@@ -164,6 +175,8 @@ const Signup = () => {
                   label={'Email'}
                   name='email'
                   control={control}
+                  error={!!errors.email}
+                  helperText={errors.email ? errors.email.message : ''}
                   placeholder="Enter your email..."
                   rules={{ required: true }}
                 />
@@ -174,6 +187,8 @@ const Signup = () => {
                   name='password'
                   type="password"
                   control={control}
+                  error={!!errors.password}
+                  helperText={errors.password ? errors.password.message : ''}
                   placeholder="Enter your password..."
                   rules={{ required: true }}
                 />
@@ -184,6 +199,8 @@ const Signup = () => {
                   name='confirmPassword'
                   type="password"
                   control={control}
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword ? errors.confirmPassword.message : ''}
                   placeholder="Confirm your password..."
                   rules={{ required: true }}
                 />
@@ -216,6 +233,7 @@ const Signup = () => {
                     color='secondary.contrastText'
                     href='#'
                     underline="none"
+                    target="_blank"
                   >
                     Terms & Services
                   </Link>
