@@ -12,7 +12,7 @@ interface PublicLayoutProps {
 const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box sx={{ position: 'relative', minHeight: '95vh' }}>
         <BackgroundImage src={Background} alt="background" backgroundColor='rgba(250, 250, 250, 0.5)' />
         <Container 
           sx={{ 

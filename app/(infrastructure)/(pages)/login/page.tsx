@@ -16,7 +16,7 @@ import { PublicRoutes } from "@/app/(infrastructure)/_routes"
 import useAuth from "../../_redux/features/auth/useAuth"
 
 const schema = yup.object().shape({
-  email: yup.string().required(),
+  email: yup.string().email(),
   password: yup.string().required()
 }).required()
 
@@ -35,6 +35,8 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(schema)
   })
+
+  console.log(errors.email)
 
   const router = useRouter()
   const axios = require('axios')
@@ -56,7 +58,7 @@ const Login = () => {
       _setUser(data.email, data.password)
       router.push('/chat-start')
     }).catch((error: any) => {
-      setErrorMessage('An error occurred. Please try again later or contact with support.')
+      setErrorMessage('An error occurred. Please, review your credentials or contact with support.')
       console.log('error', error)
     })
   }
@@ -82,6 +84,8 @@ const Login = () => {
               label={'Email'}
               name='email'
               control={control}
+              error={!!errors.email}
+              helperText={errors.email ? errors.email.message : ''}
               placeholder="Enter your email..."
               rules={{
                 required: true
@@ -93,6 +97,8 @@ const Login = () => {
               label={'Password'}
               name='password'
               control={control}
+              error={!!errors.password}
+              helperText={errors.password ? errors.password.message : ''}
               placeholder="Enter your password..."
               type="password"
               rules={{
@@ -108,6 +114,7 @@ const Login = () => {
             </Typography>
           }
           </Grid>
+          
           {/* <Grid xs={12} md={12} sx={{ m: '2rem 0'}}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
               <Checkbox 
