@@ -9,6 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import ThemeContextMode from "@/app/(infrastructure)/_styles/ThemeContextMode";
 import { darkTheme, lightTheme } from "@/app/(infrastructure)/_styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import ContextProviders from "@/app/(infrastructure)/_contexts/ContextProviders";
 
 export default function App({ children }: { children: ReactNode }) {
     const { value } = useContext(ThemeContextMode);
@@ -16,14 +17,16 @@ export default function App({ children }: { children: ReactNode }) {
     return (
         <Suspense fallback={<h1>Loading</h1>}>
             <ReduxProvider store={store}>
-                <AppRouterCacheProvider>
-                    <ThemeProviderMode>
-                        <ThemeProvider theme={value === "light" ? lightTheme : darkTheme}>
-                            <CssBaseline />
-                            {children}
-                        </ThemeProvider>
-                    </ThemeProviderMode>
-                </AppRouterCacheProvider>
+                {/* <ContextProviders> */}
+                    <AppRouterCacheProvider>
+                        <ThemeProviderMode>
+                            <ThemeProvider theme={value === "light" ? lightTheme : darkTheme}>
+                                <CssBaseline />
+                                {children}
+                            </ThemeProvider>
+                        </ThemeProviderMode>
+                    </AppRouterCacheProvider>
+                {/* </ContextProviders> */}
             </ReduxProvider>
         </Suspense>
     );

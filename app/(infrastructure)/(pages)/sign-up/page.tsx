@@ -1,4 +1,5 @@
 "use client";
+import { useState } from 'react'
 import { Button, Typography } from "@mui/material"
 import PublicLayout from '@/app/(infrastructure)/_components/PublicLayout/PublicLayout'
 import Paper from '@mui/material/Paper'
@@ -11,10 +12,26 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Checkbox from '@mui/material/Checkbox'
 import { PublicRoutes } from "@/app/(infrastructure)/_routes"
+import useAuth from "../../_redux/features/auth/useAuth"
+import CircularProgress from '@mui/material/CircularProgress'
+import { SelectBasicValidation } from '../../_components/SelectBasicValidation'
+import { persistLocalStorage } from "@/app/(infrastructure)/_utils/localStorage"
+import { useRouter } from "next/navigation"
+import { useTheme } from '@emotion/react'
+import { Theme } from '@mui/material/styles'
 
 const schema = yup.object().shape({
-  email: yup.string().required(),
-  password: yup.string().required()
+  name: yup.string().required(),
+  lastName: yup.string().required(),
+  company: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string()
+  .required('Password is required')
+  .matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+  ),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), undefined], 'Passwords must match').required()
 }).required()
 
 const Signup = () => {
@@ -28,145 +45,235 @@ const Signup = () => {
     resolver: yupResolver(schema)
   })
 
+  const router = useRouter()
+  const axios = require('axios')
+  const { _setUser } = useAuth()
+  const [loader, setLoader] = useState(false)
+  const [disableButton, setDisableButton] = useState(true)
+  const theme = useTheme()
+
+  const handleRegister = async (data: any) => {
+    console.log('data', data)
+    setLoader(true)
+    const baseURL = process.env.NEXT_PUBLIC_API_URL
+    const instance = axios.create({
+      baseURL,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    instance.post('/register', {
+      username: data.email,
+      firstName: data.name,
+      lastName: data.lastName,
+      company: data.company,
+      userType: data.userType,
+      email: data.email,
+      password: data.password
+    }).then((response: any) => {
+      console.log('response', response)
+      router.push('/login')
+      // _setUser(data.email, data.password)
+      // persistLocalStorage('user', { token: response.data, email: data.email})
+      // setTimeout(() => {
+      //   router.push('/chat-start')
+      // }, 6000)
+    }).catch((error: any) => {
+      console.log('error', error)
+      setLoader(false)
+    })
+  }
+
   return (
     <PublicLayout>
       <Paper sx={{ backgroundColor: 'primary.light', width: '45%', padding: '3rem 5rem' }}>
-      <Grid container spacing={2}>
-          <Grid xs={12} md={12}>
-            <Typography 
-              variant="h1" 
-              color='primary.contrastText' 
-              sx={{ fontWeight: 900 }}
-            >
-              SIGN UP.
-            </Typography>
-          </Grid>
-          <Grid xs={12} md={12} sx={{ margin: '2rem 0'}}>
-            <Typography variant="body1" color='primary.contrastText'>
-              Welcome to OQULi! Enter your details below to create your account.
-            </Typography>
-          </Grid>
-          <Grid xs={12} md={6}>
-            <InputBasicValidation
-              label={'First Name'}
-              name='name'
-              control={control}
-              placeholder="Enter your first name..."
-              rules={{ required: true }}
-            />
-          </Grid>
-          <Grid xs={12} md={6}>
-            <InputBasicValidation
-              label={'Last Name'}
-              name='lastName'
-              control={control}
-              placeholder="Enter your last name..."
-              rules={{ required: true }}
-            />
-          </Grid>
-          <Grid xs={12} md={6}>
-            <InputBasicValidation
-              label={'Company'}
-              name='company'
-              control={control}
-              placeholder="Enter company name..."
-              rules={{ required: true }}
-            />
-          </Grid>
-          <Grid xs={12} md={6}>
-            <InputBasicValidation
-              label={'User Type'}
-              name='userType'
-              control={control}
-              placeholder="Select type"
-              rules={{ required: true }}
-            />
-          </Grid>
-          <Grid xs={12} md={12}>
-            <InputBasicValidation
-              label={'Email'}
-              name='email'
-              control={control}
-              placeholder="Enter your email..."
-              rules={{ required: true }}
-            />
-          </Grid>
-          <Grid xs={12} md={12}>
-            <InputBasicValidation
-              label={'Password'}
-              name='password'
-              type="password"
-              control={control}
-              placeholder="Enter your password..."
-              rules={{ required: true }}
-            />
-          </Grid>
-          <Grid xs={12} md={12}>
-            <InputBasicValidation
-              label={'Confirm Password'}
-              name='confirmPassword'
-              type="password"
-              control={control}
-              placeholder="Confirm your password..."
-              rules={{ required: true }}
-            />
-          </Grid>
-          <Grid xs={12} md={12} sx={{ margin: '2rem 0'}}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
-              <Checkbox 
-                inputProps={{
-                  'aria-labelledby': 'logged-in-checkbox'
-                }} 
-                size="small"
-                sx={{ 
-                  p: '0 0.5rem 0 0', 
-                  color: 'secondary.contrastText',
-                  '&.Mui-checked': {
-                    color: 'secondary.contrastText',
-                  },
-                }}
-              />
-              <Typography 
-                variant="body1" 
-                color='primary.contrastText'
-              >
-                I agree with the 
-              </Typography>
-              &nbsp;
-              <Link 
-                href='#'
-                target="_blank"
-                style={{ textDecoration: 'none' }}
-              >
-                <Typography variant="body1" color='secondary.contrastText'>
-                  Terms & Services
+        {
+          loader ? (
+            <Grid container spacing={2}>
+              <Grid xs={12} md={12}>
+                <Typography 
+                  variant="h1" 
+                  color='primary.contrastText' 
+                  sx={{ fontWeight: 900 }}
+                >
+                  ALL SET.
                 </Typography>
-              </Link>
-            </Box>
-          </Grid>
-          <Grid xs={12} md={12}>
-              <Button variant="contained">Sign up</Button>
-          </Grid>
-          <Grid xs={12} md={12}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-              <Typography 
-                variant="body1" 
-                color='primary.contrastText'
-              >
-                Already have an account?
-              </Typography>
-              &nbsp;
-              <Link 
-                href={PublicRoutes.LOGIN}
-                style={{ textDecoration: 'none' }}
-              >
-                <Typography variant="body1" color='secondary.contrastText'>
-                  Log in
+              </Grid>
+              <Grid xs={12} md={12}>
+                <Typography variant="body1" color='primary.contrastText'>
+                  Your account has been created. You will be redirected to the platform now.
                 </Typography>
-              </Link>
-            </Box>
-          </Grid>
-        </Grid>
+              </Grid>
+              <Grid xs={12} md={12} sx={{ margin: '5rem 0'}}>
+                <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+                  <CircularProgress 
+                    style={{ width: '10rem', height: '10rem' }}
+                    sx={{ color: 'secondary.main' }} />
+                </Box>
+              </Grid>
+            </Grid>
+          ) :
+          (
+            <Grid container spacing={2}>
+              <Grid xs={12} md={12}>
+                <Typography 
+                  variant="h1" 
+                  color='primary.contrastText' 
+                  sx={{ fontWeight: 900 }}
+                >
+                  SIGN UP.
+                </Typography>
+              </Grid>
+              <Grid xs={12} md={12} sx={{ margin: '2rem 0'}}>
+                <Typography variant="body1" color='primary.contrastText'>
+                  Welcome to OQULi! Enter your details below to create your account.
+                </Typography>
+              </Grid>
+              <Grid xs={12} md={6}>
+                <InputBasicValidation
+                  label={'First Name'}
+                  name='name'
+                  control={control}
+                  error={!!errors.name}
+                  helperText={errors.name ? errors.name.message : ''}
+                  placeholder="Enter your first name..."
+                  rules={{ required: true }}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <InputBasicValidation
+                  label={'Last Name'}
+                  name='lastName'
+                  control={control}
+                  error={!!errors.lastName}
+                  helperText={errors.lastName ? errors.lastName.message : ''}
+                  placeholder="Enter your last name..."
+                  rules={{ required: true }}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <InputBasicValidation
+                  label={'Company'}
+                  name='company'
+                  control={control}
+                  error={!!errors.company}
+                  helperText={errors.company ? errors.company.message : ''}
+                  placeholder="Enter company name..."
+                  rules={{ required: true }}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <SelectBasicValidation
+                  label={'User Type'}
+                  name='userType'
+                  control={control}
+                  placeholder="Select type"
+                  options={[
+                    { label: 'Developer', value: 'developer' },
+                    { label: 'Developer1', value: 'developer1' }
+                  ]}
+                  defaultValue="developer"
+                  rules={{ required: true }}
+                />
+              </Grid>
+              <Grid xs={12} md={12}>
+                <InputBasicValidation
+                  label={'Email'}
+                  name='email'
+                  control={control}
+                  error={!!errors.email}
+                  helperText={errors.email ? errors.email.message : ''}
+                  placeholder="Enter your email..."
+                  rules={{ required: true }}
+                />
+              </Grid>
+              <Grid xs={12} md={12}>
+                <InputBasicValidation
+                  label={'Password'}
+                  name='password'
+                  type="password"
+                  control={control}
+                  error={!!errors.password}
+                  helperText={errors.password ? errors.password.message : ''}
+                  placeholder="Enter your password..."
+                  rules={{ required: true }}
+                />
+              </Grid>
+              <Grid xs={12} md={12}>
+                <InputBasicValidation
+                  label={'Confirm Password'}
+                  name='confirmPassword'
+                  type="password"
+                  control={control}
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword ? errors.confirmPassword.message : ''}
+                  placeholder="Confirm your password..."
+                  rules={{ required: true }}
+                />
+              </Grid>
+              <Grid xs={12} md={12} sx={{ margin: '2rem 0'}}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
+                  <Checkbox 
+                    inputProps={{
+                      'aria-labelledby': 'logged-in-checkbox'
+                    }} 
+                    size="small"
+                    sx={{ 
+                      p: '0 0.5rem 0 0', 
+                      color: 'secondary.contrastText',
+                      '&.Mui-checked': {
+                        color: 'secondary.contrastText',
+                      },
+                    }}
+                    onChange={(e) => setDisableButton(!disableButton)}
+                  />
+                  <Typography 
+                    variant="body1" 
+                    color='primary.contrastText'
+                  >
+                    I agree with the 
+                  </Typography>
+                  &nbsp;
+                  <Link 
+                    color='secondary.contrastText'
+                    href='#'
+                    target="_blank"
+                    style={{ textDecoration: 'none', color: (theme as Theme)?.palette?.secondary.contrastText }}
+                  >
+                    Terms & Services
+                  </Link>
+                </Box>
+              </Grid>
+              <Grid xs={12} md={12}>
+                <Button 
+                  variant="contained" 
+                  onClick={handleSubmit(d => handleRegister(d))}
+                  disabled={disableButton}
+                >
+                  Sign up
+                </Button>
+              </Grid>
+              <Grid xs={12} md={12}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <Typography 
+                    variant="body1" 
+                    color='primary.contrastText'
+                  >
+                    Already have an account?
+                  </Typography>
+                  &nbsp;
+                  <Link 
+                    color='secondary.contrastText'
+                    href={PublicRoutes.LOGIN}
+                    style={{ textDecoration: 'none', color: (theme as Theme)?.palette?.secondary.contrastText }}
+                  >
+                    Log in
+                  </Link>
+                </Box>
+              </Grid>
+            </Grid>
+          )
+        }
       </Paper>
     </PublicLayout>
   );

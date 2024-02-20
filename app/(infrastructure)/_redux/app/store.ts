@@ -1,12 +1,14 @@
-"use client";
-import { configureStore } from "@reduxjs/toolkit";
-import { apiService } from "../services/api.service";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import countSlice from "../features/count/countSlice";
+"use client"
+import { configureStore } from "@reduxjs/toolkit"
+import { apiService } from "../services/api.service"
+import { setupListeners } from "@reduxjs/toolkit/query"
+import countSlice from "../features/count/countSlice"
+import authSlice from "../features/auth/authSlice"
 
 export const store = configureStore({
   reducer: {
     count: countSlice,
+    auth: authSlice,
     [apiService.reducerPath]: apiService.reducer,
   },
   middleware: (getDefaultMiddleware) =>

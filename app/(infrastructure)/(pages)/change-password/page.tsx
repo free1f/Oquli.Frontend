@@ -82,7 +82,7 @@ const ChangePassword = () => {
             <Button variant="contained">Save</Button>
           </Grid>
           <Grid xs={12} md={12}>
-            <Button variant="outlined">Cancel</Button>
+            <Button variant="text">Cancel</Button>
           </Grid>
         </Grid>
       </Paper>
