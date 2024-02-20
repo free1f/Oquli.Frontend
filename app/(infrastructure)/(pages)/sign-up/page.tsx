@@ -17,6 +17,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { SelectBasicValidation } from '../../_components/SelectBasicValidation'
 import { persistLocalStorage } from "@/app/(infrastructure)/_utils/localStorage"
 import { useRouter } from "next/navigation"
+import { useTheme } from '@emotion/react'
+import { Theme } from '@mui/material/styles'
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -43,13 +45,12 @@ const Signup = () => {
     resolver: yupResolver(schema)
   })
 
-  console.log(errors)
-
   const router = useRouter()
   const axios = require('axios')
   const { _setUser } = useAuth()
   const [loader, setLoader] = useState(false)
   const [disableButton, setDisableButton] = useState(true)
+  const theme = useTheme()
 
   const handleRegister = async (data: any) => {
     console.log('data', data)
@@ -237,6 +238,7 @@ const Signup = () => {
                     color='secondary.contrastText'
                     href='#'
                     target="_blank"
+                    style={{ textDecoration: 'none', color: (theme as Theme)?.palette?.secondary.contrastText }}
                   >
                     Terms & Services
                   </Link>
@@ -263,6 +265,7 @@ const Signup = () => {
                   <Link 
                     color='secondary.contrastText'
                     href={PublicRoutes.LOGIN}
+                    style={{ textDecoration: 'none', color: (theme as Theme)?.palette?.secondary.contrastText }}
                   >
                     Log in
                   </Link>

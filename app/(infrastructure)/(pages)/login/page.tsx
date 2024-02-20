@@ -18,8 +18,7 @@ import { persistLocalStorage } from "@/app/(infrastructure)/_utils/localStorage"
 import CircularProgress from '@mui/material/CircularProgress'
 
 const schema = yup.object().shape({
-  // email: yup.string().email(),
-  email: yup.string().required(),
+  email: yup.string().email().required(),
   password: yup.string().required()
 }).required()
 
@@ -69,7 +68,7 @@ const Login = () => {
 
   return (
     <PublicLayout>
-      <Paper sx={{ backgroundColor: 'primary.light', width: '45%', padding: '3rem 5rem' }}>
+      <Paper sx={{ backgroundColor: 'primary.light', width: '45%', padding: '3rem 5rem', minWidth: '30rem', minHeight: '40rem' }}>
         <Grid container spacing={2}>
           <Grid xs={12} md={12}>
             <Typography 

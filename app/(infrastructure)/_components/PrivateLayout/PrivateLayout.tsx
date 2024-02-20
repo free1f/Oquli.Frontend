@@ -14,7 +14,7 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children }) => {
 
   return (
     <ContextProviders>
-      <Box sx={{ position: 'relative' }}>
+      <Box sx={{ position: 'relative', minHeight: '95vh' }}>
         <BackgroundImage src={Background} alt="background" backgroundColor='rgba(250, 250, 250)' />
         <Container 
           sx={{ 
