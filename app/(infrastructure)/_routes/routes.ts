@@ -8,6 +8,11 @@ export const PublicRoutes = {
     CHANGE_PASSWORD: '/change-password',
     STYLE_GUIDE: 'style-guide'
 }
+
+export const PrivateRoutes = {
+    HOME: '/chat-start',
+    CHAT: '/chat',
+}
   
 export const AliasRouter = {
     HOME: 'Home',

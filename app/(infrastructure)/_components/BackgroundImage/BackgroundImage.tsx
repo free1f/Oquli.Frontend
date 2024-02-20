@@ -4,10 +4,11 @@ import Image, { StaticImageData } from "next/image";
 interface IBgImagesProps {
   src: string | StaticImageData;
   alt: string;
+  backgroundColor: string;
 }
 
 const BackgroundImage = (props: IBgImagesProps): ReactElement => {
-  const { src, alt } = props;
+  const { src, alt, backgroundColor } = props;
   return (
     <Image
       src={src}
@@ -16,7 +17,7 @@ const BackgroundImage = (props: IBgImagesProps): ReactElement => {
       quality={100}
       fill
       style={{
-        backgroundColor: "rgba(250, 250, 250, 0.5)",
+        backgroundColor,
         zIndex: -1,
       }}
     />
