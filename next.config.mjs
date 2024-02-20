@@ -2,9 +2,10 @@
 
 
 const nextConfig = {
-    images: {
-        // TODO: Change this to the correct domain
-      domains: ['aecworks-resources.s3.amazonaws.com'],
+  output: 'export',
+  images: {
+    // TODO: Change this to the correct domain
+    domains: ['aecworks-resources.s3.amazonaws.com'],
     },
     webpack(config) {
       // Grab the existing rule that handles SVG imports
@@ -35,5 +36,5 @@ const nextConfig = {
     },
   };
   
-  export default nextConfig;
+export default nextConfig;
   

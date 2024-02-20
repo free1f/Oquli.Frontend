@@ -30,6 +30,13 @@ export const darkTheme = createTheme({
     mode: 'dark'
   },
   components: {
-    ...darkComponents
+    ...darkComponents,
+    MuiFilledInput: {
+      styleOverrides: {
+        root: {
+          variants: [] // Add the missing 'variants' property here
+        }
+      }
+    }
   }
 })

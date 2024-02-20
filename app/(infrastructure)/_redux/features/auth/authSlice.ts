@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { UserInfo } from '@/app/(domain)/_models/user.model'
 
 export const UserKey = 'user'
-const hasUser = localStorage.getItem(UserKey)
+// const hasUser = localStorage.getItem(UserKey)
+const hasUser = null
 
 const initialState = hasUser ? JSON.parse(hasUser) : {
 	token: '',
