@@ -16,6 +16,7 @@ import useAuth from "../../_redux/features/auth/useAuth"
 import CircularProgress from '@mui/material/CircularProgress'
 import { SelectBasicValidation } from '../../_components/SelectBasicValidation'
 import { persistLocalStorage } from "@/app/(infrastructure)/_utils/localStorage"
+import { useRouter } from "next/navigation"
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -61,7 +62,7 @@ const Signup = () => {
       }
     })
     instance.post('/register', {
-      username: `user-${Math.floor(Math.random() * 1000)}`,
+      username: data.email,
       firstName: data.name,
       lastName: data.lastName,
       company: data.company,
