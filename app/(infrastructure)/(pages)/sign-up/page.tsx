@@ -5,13 +5,12 @@ import PublicLayout from '@/app/(infrastructure)/_components/PublicLayout/Public
 import Paper from '@mui/material/Paper'
 import Grid from "@mui/material/Unstable_Grid2"
 import Box from "@mui/material/Box"
-import Link from '@mui/material/Link'
+import Link from 'next/link'
 import InputBasicValidation from '@/app/(infrastructure)/_components/InputBasicValidation/InputBasicValidation'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Checkbox from '@mui/material/Checkbox'
-import { useRouter } from "next/navigation"
 import { PublicRoutes } from "@/app/(infrastructure)/_routes"
 import useAuth from "../../_redux/features/auth/useAuth"
 import CircularProgress from '@mui/material/CircularProgress'
@@ -234,10 +233,8 @@ const Signup = () => {
                   </Typography>
                   &nbsp;
                   <Link 
-                    variant="body1" 
                     color='secondary.contrastText'
                     href='#'
-                    underline="none"
                     target="_blank"
                   >
                     Terms & Services
@@ -263,10 +260,8 @@ const Signup = () => {
                   </Typography>
                   &nbsp;
                   <Link 
-                    variant="body1" 
                     color='secondary.contrastText'
                     href={PublicRoutes.LOGIN}
-                    underline="none"
                   >
                     Log in
                   </Link>

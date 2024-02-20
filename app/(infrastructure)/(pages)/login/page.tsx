@@ -5,7 +5,7 @@ import PublicLayout from '@/app/(infrastructure)/_components/PublicLayout/Public
 import Paper from '@mui/material/Paper'
 import Grid from "@mui/material/Unstable_Grid2"
 import Box from "@mui/material/Box"
-import Link from '@mui/material/Link'
+import Link from 'next/link'
 import InputBasicValidation from '@/app/(infrastructure)/_components/InputBasicValidation/InputBasicValidation'
 import { type SubmitHandler, useForm, set } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -174,25 +174,25 @@ const Login = () => {
                 Don&apos;t have an account?
               </Typography>
               &nbsp;
-              <Link 
-                variant="body1" 
-                color='secondary.contrastText'
+              <Link
                 href={PublicRoutes.SIGNUP}
-                underline="none"
+                style={{ textDecoration: 'none' }}
               >
+                <Typography variant="body1" color='secondary.contrastText'>
                   Sign up
-                </Link>
+                </Typography>
+              </Link>
             </Box>
           </Grid>
           <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <Link 
-                variant="body1" 
-                color='secondary.contrastText'
                 href={PublicRoutes.FORGOT_PASSWORD}
-                underline="none"
+                style={{ textDecoration: 'none' }}
               >
+                <Typography variant="body1" color='secondary.contrastText'>
                   Forgot password?
+                </Typography>
               </Link>
             </Box>
           </Grid>

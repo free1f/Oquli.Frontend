@@ -77,14 +77,14 @@ const Retrieve = () => {
                 Remember your password?
               </Typography>
               &nbsp;
-              <Link 
-                variant="body1" 
-                color='secondary.contrastText'
+              <Link
                 href={PublicRoutes.LOGIN}
-                underline="none"
+                style={{ textDecoration: 'none' }}
               >
+                <Typography variant="body1" color='secondary.contrastText'>
                   Log in
-                </Link>
+                </Typography>
+              </Link>
             </Box>
           </Grid>
         </Grid>
