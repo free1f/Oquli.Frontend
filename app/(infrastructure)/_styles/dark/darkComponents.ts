@@ -75,7 +75,13 @@ export const darkComponents = {
         backgroundColor: darkPalette.secondary.dark,
         '&.MuiPopover-paper': {
           '&.MuiMenu-paper': {
-            backgroundColor: darkPalette.primary.gray
+            backgroundColor: darkPalette.primary.gray,
+            color: darkPalette.primary.contrastText,
+            '&.MuiPopover-paper': {
+              '&.MuiMenu-paper': {
+                // backgroundColor: darkPalette.primary.main
+              }
+            }
           }
         }
       },

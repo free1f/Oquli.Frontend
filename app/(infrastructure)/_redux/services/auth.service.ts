@@ -2,6 +2,7 @@
 import { apiService } from "./api.service"
 import { getTokenAdapter, getTokenAdapterErrorResponse } from "@/app/(domain)/_adapters"
 import { type IUser } from "@/app/(domain)/_models/user.model"
+import { persistLocalStorage } from "@/app/(infrastructure)/_utils/localStorage"
   
 export const authApi = apiService.injectEndpoints({
   endpoints: (build) => ({
@@ -17,7 +18,9 @@ export const authApi = apiService.injectEndpoints({
         },
         transformResponse: (response: unknown): IUser => {
 					console.log('response', response)
-          return getTokenAdapter(response);
+          const tokenData = getTokenAdapter(response);
+          persistLocalStorage('user', tokenData.token)
+          return tokenData
         },
 				transformErrorResponse: (error: unknown) => {
 					console.log('error', error)

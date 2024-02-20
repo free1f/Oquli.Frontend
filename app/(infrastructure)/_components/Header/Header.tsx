@@ -12,13 +12,14 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import OquliLogo from '@/app/(infrastructure)/_assets/images/OquliLogo.png'
 import Image from "next/image"
-import { useAppSelector } from "../../_redux/app/hooks"
+import useAuth from "../../_redux/features/auth/useAuth"
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+const settings = ['Logout']
 
 function ResponsiveAppBar() {
-
+  
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
+  const { email, logOut } = useAuth()
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -28,7 +29,11 @@ function ResponsiveAppBar() {
     setAnchorElUser(null)
   }
 
-  const { email } = useAppSelector((state) => state.auth)
+  const handleMenuClick = () => {
+    logOut()
+    handleCloseUserMenu()
+  }
+
 
   return (
     <AppBar position="static" sx={{ backgroundColor: 'primary.main'}}>
@@ -37,12 +42,13 @@ function ResponsiveAppBar() {
           <Image src={OquliLogo} alt="logo" />
           <Box sx={{ flexGrow: 0 }}>
             {
-              email.length > 0 &&
+              email.length > 0 && (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Tooltip>
+              )
             }
             <Menu
               sx={{ mt: '45px' }}
@@ -61,7 +67,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleMenuClick}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

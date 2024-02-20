@@ -4,6 +4,7 @@ import Box from "@mui/material/Box"
 import Background from "@/app/(infrastructure)/_assets/images/Background.png"
 import BackgroundImage from "@/app/(infrastructure)/_components/BackgroundImage/BackgroundImage"
 import Container from "@mui/material/Container"
+import ContextProviders from "@/app/(infrastructure)/_contexts/ContextProviders";
 
 interface PrivateLayoutProps {
   children: ReactNode;
@@ -12,7 +13,8 @@ interface PrivateLayoutProps {
 const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children }) => {
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <ContextProviders>
+      <Box sx={{ position: 'relative' }}>
         <BackgroundImage src={Background} alt="background" backgroundColor='rgba(250, 250, 250)' />
         <Container 
           sx={{ 
@@ -24,7 +26,8 @@ const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children }) => {
           }}>
           {children}
         </Container>
-    </Box>
+      </Box>
+    </ContextProviders>
   );
 }
 

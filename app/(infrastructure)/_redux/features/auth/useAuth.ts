@@ -3,19 +3,23 @@ import { useGetTokenQuery } from '@/app/(infrastructure)/_redux/services/auth.se
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import { setUser } from "./authSlice"
 import { type IUser } from "@/app/(domain)/_models/user.model"
+import { PrivateRoutes, PublicRoutes } from '@/app/(infrastructure)/_routes'
+import { retrieveLocalStorage, clearLocalStorage } from '@/app/(infrastructure)/_utils/localStorage'
 
 interface IUseAuth {
 	// token: IUser
 	// isFetchingToken: boolean
 	// loginError: any,
 	// _handleLogin: () => void
+	email: string
 	_setUser: (email: string, password: string) => void
+	logOut: () => void
 }
 
 const useAuth = (): IUseAuth => {
 	const dispatch = useAppDispatch()
 
-	const { email, password } = useAppSelector((state) => state.auth)
+	const { email } = useAppSelector((state) => state.auth)
 	const [shouldFetch, setShouldFetch] = useState(false)
 	
 	// TODO: Replace with refetch
@@ -37,6 +41,12 @@ const useAuth = (): IUseAuth => {
 	// 	[dispatch, email],
 	// );
 
+	const logOut = () => {
+		clearLocalStorage('user')
+		if (window.location.pathname !== PublicRoutes.LOGIN)
+			window.location.href = `${process.env.NEXT_PUBLIC_URL}/${PublicRoutes.LOGIN}`
+	}
+
 	const _setUser = (email: string, password: string) => {
 		dispatch(setUser({ email, password }))
 	}
@@ -45,7 +55,9 @@ const useAuth = (): IUseAuth => {
 		// token,
 		// isFetchingToken,
 		// loginError,
+		logOut,
 		_setUser,
+		email
 		// _handleLogin
 	}
 }

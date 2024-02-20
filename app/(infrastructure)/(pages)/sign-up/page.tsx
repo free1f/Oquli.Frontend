@@ -15,13 +15,13 @@ import { useRouter } from "next/navigation"
 import { PublicRoutes } from "@/app/(infrastructure)/_routes"
 import useAuth from "../../_redux/features/auth/useAuth"
 import CircularProgress from '@mui/material/CircularProgress'
-import { SelectBasicValidation } from '../../_components/SelectBasicValidation';
+import { SelectBasicValidation } from '../../_components/SelectBasicValidation'
+import { persistLocalStorage } from "@/app/(infrastructure)/_utils/localStorage"
 
 const schema = yup.object().shape({
   name: yup.string().required(),
   lastName: yup.string().required(),
   company: yup.string().required(),
-  useType: yup.string().required(),
   email: yup.string().email().required(),
   password: yup.string()
   .required('Password is required')
@@ -43,6 +43,8 @@ const Signup = () => {
     resolver: yupResolver(schema)
   })
 
+  console.log(errors)
+
   const router = useRouter()
   const axios = require('axios')
   const { _setUser } = useAuth()
@@ -50,6 +52,8 @@ const Signup = () => {
   const [disableButton, setDisableButton] = useState(true)
 
   const handleRegister = async (data: any) => {
+    console.log('data', data)
+    setLoader(true)
     const baseURL = process.env.NEXT_PUBLIC_API_URL
     const instance = axios.create({
       baseURL,
@@ -66,13 +70,13 @@ const Signup = () => {
       email: data.email,
       password: data.password
     }).then((response: any) => {
-      setLoader(true)
       console.log('response', response)
-      _setUser(data.email, data.password)
-      setTimeout(() => {
-        router.push('/chat-start')
-        setLoader(false)
-      }, 6000)
+      router.push('/login')
+      // _setUser(data.email, data.password)
+      // persistLocalStorage('user', { token: response.data, email: data.email})
+      // setTimeout(() => {
+      //   router.push('/chat-start')
+      // }, 6000)
     }).catch((error: any) => {
       console.log('error', error)
       setLoader(false)
@@ -164,7 +168,8 @@ const Signup = () => {
                   control={control}
                   placeholder="Select type"
                   options={[
-                    { label: 'Developer', value: 'developer' }
+                    { label: 'Developer', value: 'developer' },
+                    { label: 'Developer1', value: 'developer1' }
                   ]}
                   defaultValue="developer"
                   rules={{ required: true }}

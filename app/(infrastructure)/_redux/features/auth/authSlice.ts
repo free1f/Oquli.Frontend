@@ -1,13 +1,13 @@
+'use client'
 import { createSlice } from '@reduxjs/toolkit'
 import type { UserInfo } from '@/app/(domain)/_models/user.model'
 
-// export const UserKey = 'user'
-// const hasUser = localStorage.getItem(UserKey)
+export const UserKey = 'user'
+const hasUser = localStorage.getItem(UserKey)
 
-const initialState = {
+const initialState = hasUser ? JSON.parse(hasUser) : {
 	token: '',
-	email: '',
-	password: ''
+	email: ''
 }
 
 // slice
@@ -17,7 +17,6 @@ export const authSlice = createSlice({
   reducers: {
     setUser: (state, action): void => {
       state.email = action.payload.email
-			state.password = action.payload.password
     },
 		setToken: (state, action): void => {
 			state.token = action.payload.token

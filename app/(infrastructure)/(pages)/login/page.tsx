@@ -14,9 +14,12 @@ import Checkbox from '@mui/material/Checkbox'
 import { useRouter } from "next/navigation"
 import { PublicRoutes } from "@/app/(infrastructure)/_routes"
 import useAuth from "../../_redux/features/auth/useAuth"
+import { persistLocalStorage } from "@/app/(infrastructure)/_utils/localStorage"
+import CircularProgress from '@mui/material/CircularProgress'
 
 const schema = yup.object().shape({
-  email: yup.string().email(),
+  // email: yup.string().email(),
+  email: yup.string().required(),
   password: yup.string().required()
 }).required()
 
@@ -39,14 +42,15 @@ const Login = () => {
   const router = useRouter()
   const axios = require('axios')
   const [errorMessage, setErrorMessage] = useState('')
+  const [loading, setLoading] = useState(false)
   const { _setUser } = useAuth()
 
   const handleLogin = async (data: any) => {
+    setLoading(true)
     const baseURL = process.env.NEXT_PUBLIC_API_URL
     const token = btoa(`${data.email}:${data.password}`)
     const instance = axios.create({
       baseURL,
-      timeout: 1000,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -54,10 +58,12 @@ const Login = () => {
     })
     instance.get('/auth').then((response: any) => {
       _setUser(data.email, data.password)
+      persistLocalStorage('user', { token: response.data, email: data.email})
       router.push('/chat-start')
     }).catch((error: any) => {
       setErrorMessage('An error occurred. Please, review your credentials or contact with support.')
       console.log('error', error)
+      setLoading(false)
     })
   }
 
@@ -77,73 +83,88 @@ const Login = () => {
           <Grid xs={12} md={12} sx={{ margin: '2rem 0'}}>
             <Typography variant="body1" color='primary.contrastText'>Welcome back!</Typography>
           </Grid>
-          <Grid xs={12} md={12}>
-            <InputBasicValidation
-              label={'Email'}
-              name='email'
-              control={control}
-              error={!!errors.email}
-              helperText={errors.email ? errors.email.message : ''}
-              placeholder="Enter your email..."
-              rules={{
-                required: true
-              }}
-            />
-          </Grid>
-          <Grid xs={12} md={12}>
-            <InputBasicValidation
-              label={'Password'}
-              name='password'
-              control={control}
-              error={!!errors.password}
-              helperText={errors.password ? errors.password.message : ''}
-              placeholder="Enter your password..."
-              type="password"
-              rules={{
-                required: true
-              }}
-            />
-          </Grid>
-          <Grid xs={12} md={12} sx={{ m: '0 0'}}>
           {
-            errorMessage.length &&
-            <Typography variant="body1" color='secondary.main'>
-              {errorMessage}
-            </Typography>
+            loading ? (
+              <Grid xs={12} md={12}>
+                <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+                  <CircularProgress 
+                    style={{ width: '10rem', height: '10rem' }}
+                    sx={{ color: 'secondary.main' }}
+                  />
+                </Box>
+              </Grid>
+            ) : (
+              <>
+              <Grid xs={12} md={12}>
+                <InputBasicValidation
+                  label={'Email'}
+                  name='email'
+                  control={control}
+                  error={!!errors.email}
+                  helperText={errors.email ? errors.email.message : ''}
+                  placeholder="Enter your email..."
+                  rules={{
+                    required: true
+                  }}
+                />
+              </Grid>
+              <Grid xs={12} md={12}>
+                <InputBasicValidation
+                  label={'Password'}
+                  name='password'
+                  control={control}
+                  error={!!errors.password}
+                  helperText={errors.password ? errors.password.message : ''}
+                  placeholder="Enter your password..."
+                  type="password"
+                  rules={{
+                    required: true
+                  }}
+                />
+              </Grid>
+              <Grid xs={12} md={12} sx={{ m: '0 0'}}>
+              {
+                errorMessage.length &&
+                <Typography variant="body1" color='secondary.main'>
+                  {errorMessage}
+                </Typography>
+              }
+              </Grid>
+              
+              {/* <Grid xs={12} md={12} sx={{ m: '2rem 0'}}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
+                  <Checkbox 
+                    inputProps={{
+                      'aria-labelledby': 'logged-in-checkbox'
+                    }} 
+                    size="small"
+                    sx={{ 
+                      p: '0 0.5rem 0 0', 
+                      color: 'secondary.contrastText',
+                      '&.Mui-checked': {
+                        color: 'secondary.contrastText',
+                      },
+                    }}
+                  />
+                  <Typography 
+                    variant="body1" 
+                    color='primary.contrastText'
+                  >
+                    Keep me logged in
+                  </Typography>
+                </Box>
+              </Grid> */}
+              <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
+                <Button 
+                  variant="contained"
+                  onClick={handleSubmit((d) => handleLogin(d))}
+                >
+                  Log in
+                </Button>
+              </Grid>
+              </>
+            )
           }
-          </Grid>
-          
-          {/* <Grid xs={12} md={12} sx={{ m: '2rem 0'}}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
-              <Checkbox 
-                inputProps={{
-                  'aria-labelledby': 'logged-in-checkbox'
-                }} 
-                size="small"
-                sx={{ 
-                  p: '0 0.5rem 0 0', 
-                  color: 'secondary.contrastText',
-                  '&.Mui-checked': {
-                    color: 'secondary.contrastText',
-                  },
-                }}
-              />
-              <Typography 
-                variant="body1" 
-                color='primary.contrastText'
-              >
-                Keep me logged in
-              </Typography>
-            </Box>
-          </Grid> */}
-          <Grid xs={12} md={12} sx={{ mb: '1rem'}}>
-            <Button 
-              variant="contained" 
-              onClick={handleSubmit((d) => handleLogin(d))}
-            >
-              Log in
-            </Button>
-          </Grid>
           <Grid xs={12} md={12}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <Typography 

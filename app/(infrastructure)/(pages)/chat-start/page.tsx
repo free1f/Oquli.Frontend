@@ -11,13 +11,19 @@ import { useRouter } from 'next/navigation'
 import SelectStandard from './_components/SelectStandard'
 import { PrivateRoutes } from '@/app/(infrastructure)/_routes'
 import { useAppSelector, useAppDispatch } from "../../_redux/app/hooks"
+import { useAuthContext } from '../../_contexts/AuthContext'
+// import useAuth from "../../_hooks/useAuth"
+import useAuth from "../../_redux/features/auth/useAuth"
+import { retrieveLocalStorage } from '@/app/(infrastructure)/_utils/localStorage'
 
 const ChatStart = () => {
-	const router = useRouter()
 	const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-	const { email, password } = useAppSelector((state) => state.auth)
+	// const { email, password } = useAppSelector((state) => state.auth)
+	// const { user } = useAuthContext()
+	const { email } = useAuth()
+	// const { email } =  retrieveLocalStorage('user')
 
 	return (
 		<PrivateLayout>
@@ -25,7 +31,7 @@ const ChatStart = () => {
 				<Grid container spacing={1}>
 					<Grid xs={12} md={12}>
 						<Box sx={{ display: 'flex', justifyContent: 'center'}}>
-							<Typography variant="h1" color='primary.contrastText'>HI, {email}</Typography>
+							<Typography variant="h1" color='primary.contrastText'>Hi, {email}</Typography>
 						</Box>
 					</Grid>
 					<Grid xs={12} md={12}>
